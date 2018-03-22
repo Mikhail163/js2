@@ -109,13 +109,13 @@ function deleteMenu() {
  * @param {array} [myItems = []]  Пункты меню, по умолчанию их нет
  */
 function SubMenu(myId, myClass, myItems = []) {
-    this.id = myId;
-    this.className = myClass;
-    this.items = myItems;
+    Menu.call(this, myId, myClass, myItems = [])
 }
 
 // Наследуем все методы класса Menu
 SubMenu.prototype.__proto__ = Menu.prototype;
+SubMenu.prototype.constructor = SubMenu;
+
 
 /**
  * Метод класса SubMenu
