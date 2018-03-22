@@ -89,7 +89,7 @@ Hamburger.prototype.calculate = function (attrId = -1) {
     this.total_kal = total_kal;
     this.total_price = total_price;
 
-    let result = `Цена заказ ${this.total_price} р, калорийность ${this.total_kal} кал`;
+    let result = `Цена гамбургера ${this.total_price} р, калорийность ${this.total_kal} кал`;
 
     if (attrId != -1)
         this.result.textContent = result;
