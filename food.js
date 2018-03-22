@@ -47,6 +47,11 @@ function Hamburger(id = "food") {
 
 }
 
+/**
+ * Метод подсчитывает калории и цену и выводит результат на экран
+ * @param   {integer} [attrId = -1] Какое свойство изменено
+ * @returns {string} Вывод результата - строка с подсчитанными значениями
+ */
 Hamburger.prototype.calculate = function (attrId = -1) {
 
     let total_kal = 0;
@@ -94,6 +99,9 @@ Hamburger.prototype.calculate = function (attrId = -1) {
 
 }
 
+/**
+ * Отрисовываем наш объект гамбургер
+ */
 Hamburger.prototype.render = function () {
 
     // отображаем все свойства
@@ -101,7 +109,7 @@ Hamburger.prototype.render = function () {
 
     for (let i = 0; i < this.info.length; i++) {
 
-        // создаем новый блок
+        // создаем новый блок food-item
         if (i === 0 || this.info[i - 1].attr != this.info[i].attr) {
             div = document.createElement('div');
             div.classList.add("food-item");
@@ -192,6 +200,7 @@ Hamburger.prototype.render = function () {
  * @param {integer} select Выбрано? 1 - да; 0 - нет
  * @param {string} type   это checkbox или select?
  * @param {string} attr   имя параметра
+ * @param {string} ru_attr   имя параметра на русском
  * @param {string} value  значение параметра
  */
 function HambAttrInfo(price, kal, name, select, type, attr, ru_attr, value) {
@@ -205,11 +214,18 @@ function HambAttrInfo(price, kal, name, select, type, attr, ru_attr, value) {
     this.ru_attr = ru_attr;
 }
 
-
+/**
+ * Возвращаем цену, если свойство выбрано
+ * @returns {integer} Цена свойства
+ */
 HambAttrInfo.prototype.getPrice = function () {
     return this.select === 0 ? 0 : this.price;
 };
 
+/**
+ * Возвращаем кол-во калорий, если свойство выбрано
+ * @returns {integer} Кол-во калорий
+ */
 HambAttrInfo.prototype.getKal = function () {
     return this.select === 0 ? 0 : this.kal;
 };
