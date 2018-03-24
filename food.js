@@ -35,21 +35,14 @@ function Hamburger(size, stuffing) {
 
 }
 
-Hamburger.SIZE_SMALL = ...
-    Hamburger.SIZE_LARGE = ...
-    Hamburger.STUFFING_CHEESE = ...
-    Hamburger.STUFFING_SALAD = ...
-    Hamburger.STUFFING_POTATO = ...
-    Hamburger.TOPPING_MAYO = ...
-    Hamburger.TOPPING_SPICE = ...
-    /**
-     * Добавить добавку к гамбургеру. Можно добавить несколько
-     *– при условии, что они разные.
-     * 
-     * @param topping     Тип добавки
-     * @throws {HamburgerException}  При неправильном использовании
-     */
-    Hamburger.prototype.addTopping = function (topping)...
+/**
+ * Добавить добавку к гамбургеру. Можно добавить несколько
+ *– при условии, что они разные.
+ * 
+ * @param topping     Тип добавки
+ * @throws {HamburgerException}  При неправильном использовании
+ */
+Hamburger.prototype.addTopping = function (topping)...
     /**
      * Убрать добавку – при условии, что она ранее была 
      * добавлена.
