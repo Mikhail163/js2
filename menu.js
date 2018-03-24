@@ -49,9 +49,10 @@ Menu.prototype.remove = function () {
 };
 
 //Класс для пункта меню
-function MenuItem(href, title) {
+function MenuItem(href, title, submenu = {}) {
     this.href = href;
     this.title = title;
+    this.submenu = submenu;
 }
 
 /**
@@ -59,7 +60,14 @@ function MenuItem(href, title) {
  * @returns {string} Возвращаем html код пункта меню
  */
 MenuItem.prototype.renderItem = function () {
-    return '<li><a href="' + this.href + '">' + this.title + '</a></li>';
+
+    let menu = '';
+
+    if (this.submenu instanceof Menu)
+        menu = this.submenu.render();
+
+    return '<li><a href="' + this.href + '">' + this.title + '</a>' + menu + '</li>';
+
 };
 
 /**
@@ -81,17 +89,28 @@ function createMenu() {
     menu1.innerHTML = menuMain.render([
                 new MenuItem('/', 'Home'),
                 new MenuItem('/about', 'О нас'),
-                new MenuItem('/service', 'Услуги'),
-                new MenuItem('/blog', 'Блог'),
-                new Menu('my2', 'my2', [
-                    new MenuItem('/blog/php', 'php'),
-                    new MenuItem('/blog/js', 'js'),
-                    new MenuItem('/blog/mysql', 'mysql'),
-                    new MenuItem('/blog/yii2', 'yii2'),
-                ]),
+                new MenuItem('/service', 'Услуги',
+            new Menu('my3', 'menu', [
+                            new MenuItem('/service/develop', 'разработка'),
+                            new MenuItem('/service/saas', 'облачные решения'),
+                            new MenuItem('/blog/test', 'тестирование'),
+                ])),
+                new MenuItem('/blog', 'Блог',
+            new Menu('my2', 'menu', [
+                            new MenuItem('/blog/php', 'php'),
+                            new MenuItem('/blog/js', 'js',
+                    new Menu('my4', 'menu', [
+                            new MenuItem('/blog/js/1', 'начальный уровень'),
+                            new MenuItem('/blog/js/2', 'базовый уровень'),
+                            new MenuItem('/blog/js/3', 'профессиональный уровень'),
+                ])
+                                        ),
+                            new MenuItem('/blog/mysql', 'mysql'),
+                            new MenuItem('/blog/yii2', 'yii2'),
+                ])),
                 new MenuItem('/contacts', 'Контакты'),
                 //new Menu('34', '324', [])
-            ]);
+                ]);
 }
 
 /**
@@ -132,7 +151,7 @@ SubMenu.prototype.render = function (myItems = []) {
     for (var i = 0; i < this.items.length; i++) {
 
         if (this.items[i] instanceof Menu) {
-            result5 += this.items[i].render();
+            result5 += '<li>' + this.items[i].render() + '</li>';
         } else if (this.items[i] instanceof MenuItem) {
             result5 += this.items[i].renderItem(); //result5 = result5 + this.items[i].renderItem();
         }
@@ -145,7 +164,7 @@ SubMenu.prototype.render = function (myItems = []) {
 window.onload = function () {
 
     menu1 = document.getElementById('menu1');
-    menuMain = new SubMenu('my1', 'my1');
+    menuMain = new Menu('my1', 'menu');
 
     createMenuButton = document.getElementById("createMenu");
     deleteMenuButton = document.getElementById("deleteMenu");

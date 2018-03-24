@@ -1,0 +1,31 @@
+.menu {
+  width: 230px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: aliceblue;
+  padding: 5px; }
+  .menu li {
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    background-color: aliceblue;
+    margin: 5px;
+    position: relative; }
+    .menu li a {
+      display: block;
+      padding: 5px;
+      text-decoration: none;
+      width: 230px;
+      box-sizing: border-box;
+      cursor: pointer; }
+    .menu li .menu {
+      display: none;
+      right: 10px; }
+    .menu li:hover {
+      background-color: azure; }
+      .menu li:hover .menu {
+        display: flex; }
+
+/*# sourceMappingURL=main.css.map */

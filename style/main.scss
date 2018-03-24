@@ -1,0 +1,46 @@
+$menu_width: 230px;
+
+.menu {
+    width: $menu_width;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: aliceblue;
+    padding: 5px;
+
+
+    li {
+
+        text-decoration: none;
+        list-style: none;
+        box-sizing: border-box;
+        background-color: aliceblue;
+        margin: 5px;
+        position: relative;
+
+
+        a {
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+            width: $menu_width;
+            box-sizing: border-box;
+            cursor: pointer;
+
+        }
+
+        .menu {
+            display: none;
+            right: 10px;
+        }
+
+        &:hover {
+            background-color: azure;
+
+            & .menu {
+                display: flex;
+            }
+        }
+    }
+}
