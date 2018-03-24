@@ -1,0 +1,29 @@
+#food {
+    margin: 0 auto;
+    width: 350px;
+}
+
+.food-item {
+    margin: 5px;
+    padding: 5px;
+    border: 1px dotted black;
+    border-radius: 5px;
+}
+
+.food-title {
+    font-weight: bold;
+}
+
+label,
+input {
+    cursor: pointer;
+}
+
+.food-result {
+    height: 100%;
+    width: 100%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
