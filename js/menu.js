@@ -85,10 +85,11 @@ let deleteMenuButton;
 /**
  * Создаем меню
  */
-function createMenu() {
+function createMenu(menu = menu1) {
 
+    menuMain = new Menu('my1', 'menu');
     //console.log(menuMain.render());
-    menu1.innerHTML = menuMain.render([
+    menu.innerHTML = menuMain.render([
                 new MenuItem('/', 'Home'),
                 new MenuItem('/about', 'О нас'),
                 new MenuItem('/service', 'Услуги',

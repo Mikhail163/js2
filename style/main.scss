@@ -58,6 +58,14 @@ header {
     align-items: center;
 }
 
+#my1 {
+    z-index: 0 !important;
+    background-color: #333;
+
+    li {
+        background-color: #333;
+    }
+}
 
 .menu {
     width: $menu_width;
@@ -67,6 +75,7 @@ header {
     flex-direction: column;
     background-color: $main-color-black;
     padding: 5px;
+    z-index: 1;
 
 
     li {

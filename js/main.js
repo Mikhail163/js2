@@ -170,46 +170,84 @@ Content.prototype.render = function () {
 
     if (this.pageId === -1) {
         // зашли первый раз, нужно все отрисовать
-        this.pageId = 0;
+        this.pageId = pageId === -1 ? 0 : pageId;
+        this.subPageId = subPageId;
     } else {
         // все уже отриовано, нужно только изменить содержимое
         this.pageId = pageId;
         this.subPageId = subPageId;
 
-        this.h1.textContent = this.getH1();
-        this.description.textContent = this.getDescription();
-        this.nav.innerHTML = this.getNav();
-
+        this.drawElement();
 
         return;
     }
 
 
     this.nav = document.createElement('div');
-
-    this.nav.innerHTML = this.getNav();
-
     this.nav.classList.add("content-nav");
     this.content.appendChild(this.nav);
 
 
     this.h1 = document.createElement('h1');
-    this.h1.textContent = this.getH1();
     this.content.appendChild(this.h1);
 
 
     this.description = document.createElement("p");
-    this.description.textContent = this.getDescription();
     this.content.appendChild(this.description);
 
     this.task = document.createElement("div");
+    let attr = document.createAttribute("id");
+    attr.value = "task";
+    this.task.setAttributeNode(attr);
     this.content.appendChild(this.task);
-
 
 
     this.renderMenu();
 
+    this.drawElement();
+
 };
+
+Content.prototype.drawElement = function () {
+
+    this.description.textContent = this.getDescription();
+    this.h1.textContent = this.getH1();
+    this.makeTask();
+    this.nav.innerHTML = this.getNav();
+
+}
+
+Content.prototype.makeTask = function () {
+
+    this.task.innerHTML = "";
+
+    if (this.subPageId !== -1) {
+        switch (this.pageId) {
+
+            case 1:
+                switch (this.subPageId) {
+                    case 1:
+                        createMenu(this.task);
+                        break;
+                    case 2:
+                        let hamburger = new Hamburger("task");
+                        break;
+                }
+                break;
+            case 2:
+                switch (this.subPageId) {
+                    case 0:
+                    case 1:
+                        createMenu(this.task);
+                        break;
+                    case 2:
+                        break;
+                }
+
+        }
+
+    }
+}
 
 Content.prototype.getH1 = function () {
 
