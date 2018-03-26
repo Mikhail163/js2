@@ -23,8 +23,12 @@ function Page(h1 = "", description = "", link = new Link(), subpages = []) {
 
 }
 
-
-function Content(url, contentId = "content", menuId = "main_menu") {
+/**
+ * Контент на нашей странице
+ * @param {string} contentId = "content" Id того, где все будем отрисовывать
+ * @param {string} menuId = "main_menu"  Id главного меню
+ */
+function Content(contentId = "content", menuId = "main_menu") {
     this.pages = [];
     this.headNav = "";
 
@@ -55,6 +59,9 @@ function Content(url, contentId = "content", menuId = "main_menu") {
 
 }
 
+/**
+ * Обработчик полученных ajax запросов
+ */
 Content.prototype.getAjax = function () {
     //console.log(this.xhr.readyState);
 
@@ -70,6 +77,10 @@ Content.prototype.getAjax = function () {
     }
 };
 
+/**
+ * Парсим полученные данные от сервера (инфорамция о страницах)
+ * @param {object} data JSON объект полученнный от сервера
+ */
 Content.prototype.parseData = function (data) {
 
     data = JSON.parse(data);
@@ -86,6 +97,11 @@ Content.prototype.parseData = function (data) {
     this.render();
 };
 
+/**
+ * Парсим информацию об отдельной странице
+ * @param   {object}   page Объект нашего пристального внимания
+ * @returns {object} возвращаем новый объект страницы, обработанный после JSON
+ */
 Content.prototype.parsePage = function (page) {
 
     let h1 = page.h1;
@@ -105,13 +121,10 @@ Content.prototype.parsePage = function (page) {
 
 };
 
-Content.prototype.getLessonInfo = function (lesson) {
 
-    console.log(lesson);
-
-}
-
-
+/**
+ * Очищаем страницу
+ */
 Content.prototype.remove = function () {
 
     this.content.textContent = "";
@@ -208,6 +221,9 @@ Content.prototype.render = function () {
 
 };
 
+/**
+ * Отрисовываем всю информацию
+ */
 Content.prototype.drawElement = function () {
 
     this.description.textContent = this.getDescription();
@@ -217,6 +233,9 @@ Content.prototype.drawElement = function () {
 
 }
 
+/**
+ * Метод выполнения непосредственно заданий
+ */
 Content.prototype.makeTask = function () {
 
     this.task.innerHTML = "";
@@ -286,6 +305,9 @@ Content.prototype.getNav = function () {
 
 }
 
+/**
+ * Методы отрисовки меню
+ */
 Content.prototype.renderMenu = function () {
 
     let menuItems = [];
@@ -300,6 +322,13 @@ Content.prototype.renderMenu = function () {
 
 };
 
+/**
+ * Получаем объект меню
+ * @param   {string} id = ""           id меню
+ * @param   {string} classCss = "menu" стиль css меню
+ * @param   {array} pages = []        Информация о страницах
+ * @returns {object} Возвращает сформированный объект меню
+ */
 Content.prototype.getMenu = function (id = "", classCss = "menu", pages = []) {
 
     let menuItem = [];
@@ -312,6 +341,11 @@ Content.prototype.getMenu = function (id = "", classCss = "menu", pages = []) {
 
 };
 
+/**
+ * Формируем menu item
+ * @param   {object}   page информация о страницах
+ * @returns {object} возвращаем  объект menuitem
+ */
 Content.prototype.getMenuItem = function (page) {
 
     let menu = {};
@@ -336,6 +370,10 @@ window.onhashchange = function () {
     content.render();
 }
 
+/**
+ * Объект обработчик Ajax запросов
+ * @param {string} parentId Id объекта, где его будем отрисовывать
+ */
 function AjaxHandler(parentId) {
 
     this.errorPath = './json/answer/error.json';
@@ -387,16 +425,26 @@ AjaxHandler.prototype.render = function () {
 
 };
 
-AjaxHandler.prototype.getError = function (data) {
+/**
+ * Отправляем запрос для получения ошибки
+ */
+AjaxHandler.prototype.getError = function () {
 
     this.ajaxObg.getAsync(this.errorPath, this);
 };
 
-AjaxHandler.prototype.getSuccess = function (data) {
+/**
+ * Отправляем запрос для получения успеного результата
+ */
+AjaxHandler.prototype.getSuccess = function () {
 
     this.ajaxObg.getAsync(this.successPath, this);
 };
 
+/**
+ * Обрабатываем полученный ответ
+ * @param {object} data присланные данные от сервера - обычно JSON объект
+ */
 AjaxHandler.prototype.process = function (data) {
 
     data = JSON.parse(data);

@@ -284,7 +284,10 @@ _Ajax.prototype.getResponse = function (obj) {
     }
 };
 
-
+/**
+ * Объект создания картинок
+ * @param {string} parentId Id элемента, где все будем отрисовывать
+ */
 function ImageBox(parentId) {
 
     this.images = [];
@@ -310,6 +313,11 @@ ImageBox.prototype.process = function (data) {
     this.render();
 };
 
+/**
+ * Обрабатываем картинки после получения из JSON объекта
+ * @param   {object}   image полученная картинка после парсинга JSON 
+ * @returns {object} Возвращаем сформированный объект
+ */
 ImageBox.prototype.parceImage = function (image) {
     return new ImageIB(image.big, image.little, image.alt)
 };
@@ -345,6 +353,12 @@ ImageBox.prototype.render = function () {
 
 };
 
+/**
+ * Объект картинка
+ * @param {string} big    Путь до большой картинки
+ * @param {string} little Путь до маленькой картинки
+ * @param {string} alt    Альтернативный текст
+ */
 function ImageIB(big, little, alt) {
     this.big = big;
     this.little = little;
