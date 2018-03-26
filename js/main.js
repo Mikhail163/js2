@@ -23,13 +23,6 @@ function Page(h1 = "", description = "", link = new Link(), subpages = []) {
 
 }
 
-Link.prototype.init = function (link = "") {
-
-    // проверяем ссылку на корректность
-    if (link.length != 0) {}
-    //
-};
-
 
 function Content(url, contentId = "content", menuId = "main_menu") {
     this.pages = [];
@@ -87,7 +80,6 @@ Content.prototype.parseData = function (data) {
         this.pages.push(this.parsePage(data.pages[i]));
     }
 
-    this.h1 = data.pages[0].h1;
     this.url = data.pages[0].link.url;
 
 
