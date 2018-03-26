@@ -56,7 +56,7 @@ function Content(url, contentId = "content", menuId = "main_menu") {
 }
 
 Content.prototype.getAjax = function () {
-    console.log(this.xhr.readyState);
+    //console.log(this.xhr.readyState);
 
     if (this.xhr.readyState !== 4) {
         return;
@@ -241,6 +241,10 @@ Content.prototype.makeTask = function () {
                         createMenu(this.task);
                         break;
                     case 2:
+                        let image = new ImageBox("task");
+                        break;
+                    case 3:
+
                         break;
                 }
 
