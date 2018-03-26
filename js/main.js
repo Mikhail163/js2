@@ -244,7 +244,7 @@ Content.prototype.makeTask = function () {
                         let image = new ImageBox("task");
                         break;
                     case 3:
-
+                        let a = new AjaxHandler("task");
                         break;
                 }
 
@@ -335,3 +335,75 @@ window.onload = function () {
 window.onhashchange = function () {
     content.render();
 }
+
+function AjaxHandler(parentId) {
+
+    this.errorPath = './json/answer/error.json';
+    this.successPath = './json/answer/success.json';
+
+    this.parent = document.getElementById(parentId);
+
+    this.ajaxObg = new _Ajax();
+
+    this.render();
+
+    this.canvas;
+}
+
+AjaxHandler.prototype.render = function () {
+
+    let div = document.createElement('div');
+    div.classList.add("ajaxHandler");
+    this.parent.appendChild(div);
+
+    let button = document.createElement('input');
+    let attr = document.createAttribute("type");
+    attr.value = 'button';
+    button.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = 'Получить ошибку';
+    button.setAttributeNode(attr);
+    div.appendChild(button);
+
+    button.addEventListener('click', () => this.getError());
+
+
+    button = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'button';
+    button.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = 'Получить, что все ок';
+    button.setAttributeNode(attr);
+    div.appendChild(button);
+
+    button.addEventListener('click', () => this.getSuccess());
+
+    this.canvas = document.createElement('div');
+    this.canvas.classList.add("ajaxCanvas");
+    div.appendChild(this.canvas);
+
+};
+
+AjaxHandler.prototype.getError = function (data) {
+
+    this.ajaxObg.getAsync(this.errorPath, this);
+};
+
+AjaxHandler.prototype.getSuccess = function (data) {
+
+    this.ajaxObg.getAsync(this.successPath, this);
+};
+
+AjaxHandler.prototype.process = function (data) {
+
+    data = JSON.parse(data);
+
+    if (data.result === "success")
+        this.canvas.textContent = "Миссия выполнена успешно!"
+    else {
+        this.canvas.textContent = "Внимание - ошибка!"
+    }
+};

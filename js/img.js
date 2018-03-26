@@ -242,21 +242,35 @@ window.onload = () => gallery.init({
 });
 */
 
+/**
+ * Объект обработчик Ajax запросов
+ */
 function _Ajax() {
     this.xhr = new XMLHttpRequest();
 }
 
-_Ajax.prototype.getAsync = function (url, callBack) {
+/**
+ * Отправляем асинхронный GET запрос
+ * @param {string} url куда отправляем запрос
+ * @param {Object} obj объект, который вызвал этот запрос
+ *                     предполагается, что в этом объекте 
+ *                     есть метод process
+ */
+_Ajax.prototype.getAsync = function (url, obj) {
 
     // загружаем файл с метаинформацией с помощью ajax
     this.xhr.open('GET', url);
 
-    this.xhr.onreadystatechange = () => this.getResponse(callBack);
+    this.xhr.onreadystatechange = () => this.getResponse(obj);
 
     this.xhr.send();
 
 };
 
+/**
+ * Обработка получения ответа от сервера
+ * @param {Object} obj Объект, кто вызвал запрос
+ */
 _Ajax.prototype.getResponse = function (obj) {
 
     if (this.xhr.readyState !== 4) {
