@@ -1,4 +1,63 @@
 $menu_width: 230px;
+$container_width: 1200px;
+$main-color-light: #83d0f2;
+$main-color-black: #222;
+
+body {
+    font-family: sans-serif;
+}
+
+.container {
+    width: $container_width;
+    margin: 0 auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    margin-top: 20px;
+}
+
+#main_menu {
+    margin-top: -20px;
+}
+
+#content {
+    box-sizing: border-box;
+    margin-left: 10px;
+    flex: 1;
+}
+
+.content-nav {
+    color: grey;
+
+    a {
+        color: grey;
+        cursor: pointer;
+        text-decoration: none;
+
+        &:hover {
+            color: red;
+        }
+    }
+}
+
+h1 {
+    border-left: 20px solid $main-color-light;
+    padding-left: 20px;
+}
+
+header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    height: 50px;
+    /*justify-content: center;*/
+    align-items: center;
+}
+
 
 .menu {
     width: $menu_width;
@@ -6,7 +65,7 @@ $menu_width: 230px;
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: $main-color-black;
     padding: 5px;
 
 
@@ -15,7 +74,7 @@ $menu_width: 230px;
         text-decoration: none;
         list-style: none;
         box-sizing: border-box;
-        background-color: aliceblue;
+        background-color: $main-color-black;
         margin: 5px;
         position: relative;
 
@@ -27,18 +86,29 @@ $menu_width: 230px;
             width: $menu_width;
             box-sizing: border-box;
             cursor: pointer;
-
+            color: $main-color-light;
+            font-weight: bold;
+            font-size: 1.2rem;
+            word-wrap: break-word;
         }
 
-        .menu {
+        > .menu {
             display: none;
             right: 10px;
+            position: absolute;
+            top: 0px;
+            left: $menu_width;
+            box-sizing: border-box;
         }
 
         &:hover {
             background-color: azure;
 
-            & .menu {
+            > a {
+                color: red;
+            }
+
+            & > .menu {
                 display: flex;
             }
         }
