@@ -114,3 +114,38 @@ header {
         }
     }
 }
+
+.submenu {
+    display: flex;
+    width: 100%;
+    &-item {
+
+        box-sizing: border-box;
+        color: $main-color-light;
+        margin: 5px;
+        padding: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+        display: block;
+        border: 1px solid $main-color-light;
+        border-radius: 3px;
+
+        &:hover {
+            color: red;
+            border-color: red;
+        }
+
+        &.active {
+            color: $main-color-black;
+            border-color: $main-color-black;
+            cursor: default;
+
+            &:hover {
+                color: $main-color-black;
+                border-color: $main-color-black;
+            }
+        }
+    }
+
+}

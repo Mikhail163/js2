@@ -15,7 +15,7 @@ Link.prototype.getHtmlCode = function (class_ = "", id = "") {
     return `<a href="${this.url}" ${class_} ${id}>${this.name}</a>`;
 };
 
-function Page(h1 = "", description = "", link = new Link(), subpages = []) {
+function Page(h1 = "", description = [], link = new Link(), subpages = []) {
     this.h1 = h1;
     this.link = link;
     this.description = description;
@@ -40,6 +40,7 @@ function Content(url, contentId = "content", menuId = "main_menu") {
     // при изменение ссылок
     this.h1;
     this.nav;
+    this.subMenu;
     this.description;
     this.task;
 
@@ -168,46 +169,47 @@ Content.prototype.render = function () {
 
     //this.remove();
 
+
+
     if (this.pageId === -1) {
         // зашли первый раз, нужно все отрисовать
-        this.pageId = 0;
-    } else {
-        // все уже отриовано, нужно только изменить содержимое
+        this.nav = document.createElement('div');
+        this.nav.classList.add("content-nav");
+        this.content.appendChild(this.nav);
+
+
+        this.h1 = document.createElement('h1');
+        this.content.appendChild(this.h1);
+
+
+        this.subMenu = document.createElement('div');
+        this.subMenu.classList.add("submenu");
+        this.content.appendChild(this.subMenu);
+
+        this.description = document.createElement("p");
+        this.content.appendChild(this.description);
+
+        this.task = document.createElement("div");
+        this.content.appendChild(this.task);
+
         this.pageId = pageId;
         this.subPageId = subPageId;
 
-        this.h1.textContent = this.getH1();
-        this.description.textContent = this.getDescription();
-        this.nav.innerHTML = this.getNav();
+        this.renderMenu();
 
-
-        return;
     }
 
+    // все уже отриовано, нужно только изменить содержимое
+    this.pageId = pageId;
+    this.subPageId = subPageId;
 
-    this.nav = document.createElement('div');
-
+    this.h1.textContent = this.getH1();
+    this.subMenu.innerHTML = this.getSubMenu();
+    this.description.innerHTML = this.getDescription();
     this.nav.innerHTML = this.getNav();
 
-    this.nav.classList.add("content-nav");
-    this.content.appendChild(this.nav);
 
 
-    this.h1 = document.createElement('h1');
-    this.h1.textContent = this.getH1();
-    this.content.appendChild(this.h1);
-
-
-    this.description = document.createElement("p");
-    this.description.textContent = this.getDescription();
-    this.content.appendChild(this.description);
-
-    this.task = document.createElement("div");
-    this.content.appendChild(this.task);
-
-
-
-    this.renderMenu();
 
 };
 
@@ -219,12 +221,44 @@ Content.prototype.getH1 = function () {
     return this.pages[this.pageId].subpages[this.subPageId].h1;
 }
 
+Content.prototype.getSubMenu = function () {
+
+    let content = "";
+
+    if (this.pageId > 0) {
+        for (let i = 0; i < this.pages[this.pageId].subpages.length; i++) {
+            let active = i === this.subPageId ? " active" : "";
+
+            content += `<a href="${this.pages[this.pageId].subpages[i].link.url}" title="${this.pages[this.pageId].subpages[i].h1}" class="submenu-item${active}">${this.pages[this.pageId].subpages[i].link.name}</a>`;
+        }
+    }
+
+    return content;
+}
+
 Content.prototype.getDescription = function () {
 
-    if (this.subPageId === -1)
-        return this.pages[this.pageId].description;
+    let description = [];
 
-    return this.pages[this.pageId].subpages[this.subPageId].description;
+    if (this.subPageId === -1)
+        description = this.pages[this.pageId].description;
+    else
+        description = this.pages[this.pageId].subpages[this.subPageId].description;
+
+    if (description.length === 1) {
+        description = description[0]
+    } else if (description.length > 1) {
+        let content = "";
+        for (let i = 0; i < description.length; i++) {
+            content += '<p>' + description[i] + '</p>';
+        }
+
+        description = content;
+    } else {
+        description = "";
+    }
+
+    return description;
 }
 
 Content.prototype.getNav = function () {

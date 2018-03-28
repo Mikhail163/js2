@@ -81,4 +81,29 @@ header {
       .menu li:hover > .menu {
         display: flex; }
 
+.submenu {
+  display: flex;
+  width: 100%; }
+  .submenu-item {
+    box-sizing: border-box;
+    color: #83d0f2;
+    margin: 5px;
+    padding: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    border: 1px solid #83d0f2;
+    border-radius: 3px; }
+    .submenu-item:hover {
+      color: red;
+      border-color: red; }
+    .submenu-item.active {
+      color: #222;
+      border-color: #222;
+      cursor: default; }
+      .submenu-item.active:hover {
+        color: #222;
+        border-color: #222; }
+
 /*# sourceMappingURL=main.css.map */
