@@ -238,7 +238,8 @@ HambAttrInfo.prototype.getKal = function () {
  */
 /*function HamburgerException(...) { ...
 }*/
-
+/*
 window.onload = function () {
     let hamburger = new Hamburger();
 }
+*/

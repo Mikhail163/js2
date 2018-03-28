@@ -41,6 +41,12 @@ header {
   /*justify-content: center;*/
   align-items: center; }
 
+#my1 {
+  z-index: 0 !important;
+  background-color: #333; }
+  #my1 li {
+    background-color: #333; }
+
 .menu {
   width: 230px;
   box-sizing: border-box;
@@ -48,7 +54,8 @@ header {
   justify-content: flex-start;
   flex-direction: column;
   background-color: #222;
-  padding: 5px; }
+  padding: 5px;
+  z-index: 1; }
   .menu li {
     text-decoration: none;
     list-style: none;
@@ -105,5 +112,57 @@ header {
       .submenu-item.active:hover {
         color: #222;
         border-color: #222; }
+
+.galleryWrapper__screen {
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+  opacity: 0.8;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  display: block;
+  text-align: center; }
+
+.galleryWrapper__image {
+  max-height: 80%;
+  max-width: 80%;
+  z-index: 101;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0; }
+
+.galleryPreload__image {
+  display: none; }
+
+.galleryWrapper__close {
+  z-index: 101;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 50px;
+  cursor: pointer; }
+
+.galleryWrapper__right {
+  z-index: 101;
+  position: absolute;
+  top: 50%;
+  height: 50px;
+  margin-top: -25px;
+  right: 10px;
+  cursor: pointer; }
+
+.galleryWrapper__left {
+  z-index: 101;
+  position: absolute;
+  top: 50%;
+  height: 50px;
+  margin-top: -25px;
+  left: 10px;
+  cursor: pointer; }
 
 /*# sourceMappingURL=main.css.map */

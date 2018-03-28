@@ -23,8 +23,12 @@ function Page(h1 = "", description = [], link = new Link(), subpages = []) {
 
 }
 
-
-function Content(url, contentId = "content", menuId = "main_menu") {
+/**
+ * Контент на нашей странице
+ * @param {string} contentId = "content" Id того, где все будем отрисовывать
+ * @param {string} menuId = "main_menu"  Id главного меню
+ */
+function Content(contentId = "content", menuId = "main_menu") {
     this.pages = [];
     this.headNav = "";
 
@@ -56,8 +60,11 @@ function Content(url, contentId = "content", menuId = "main_menu") {
 
 }
 
+/**
+ * Обработчик полученных ajax запросов
+ */
 Content.prototype.getAjax = function () {
-    console.log(this.xhr.readyState);
+    //console.log(this.xhr.readyState);
 
     if (this.xhr.readyState !== 4) {
         return;
@@ -71,6 +78,10 @@ Content.prototype.getAjax = function () {
     }
 };
 
+/**
+ * Парсим полученные данные от сервера (инфорамция о страницах)
+ * @param {object} data JSON объект полученнный от сервера
+ */
 Content.prototype.parseData = function (data) {
 
     data = JSON.parse(data);
@@ -87,6 +98,11 @@ Content.prototype.parseData = function (data) {
     this.render();
 };
 
+/**
+ * Парсим информацию об отдельной странице
+ * @param   {object}   page Объект нашего пристального внимания
+ * @returns {object} возвращаем новый объект страницы, обработанный после JSON
+ */
 Content.prototype.parsePage = function (page) {
 
     let h1 = page.h1;
@@ -106,13 +122,10 @@ Content.prototype.parsePage = function (page) {
 
 };
 
-Content.prototype.getLessonInfo = function (lesson) {
 
-    console.log(lesson);
-
-}
-
-
+/**
+ * Очищаем страницу
+ */
 Content.prototype.remove = function () {
 
     this.content.textContent = "";
@@ -173,9 +186,11 @@ Content.prototype.render = function () {
 
     if (this.pageId === -1) {
         // зашли первый раз, нужно все отрисовать
+
         this.nav = document.createElement('div');
         this.nav.classList.add("content-nav");
         this.content.appendChild(this.nav);
+
 
 
         this.h1 = document.createElement('h1');
@@ -190,28 +205,74 @@ Content.prototype.render = function () {
         this.content.appendChild(this.description);
 
         this.task = document.createElement("div");
+        let attr = document.createAttribute("id");
+        attr.value = 'task';
+        this.task.setAttributeNode(attr);
         this.content.appendChild(this.task);
-
-        this.pageId = pageId;
-        this.subPageId = subPageId;
 
         this.renderMenu();
 
     }
 
     // все уже отриовано, нужно только изменить содержимое
-    this.pageId = pageId;
+    this.pageId = pageId === -1 ? 0 : pageId;
     this.subPageId = subPageId;
 
-    this.h1.textContent = this.getH1();
-    this.subMenu.innerHTML = this.getSubMenu();
-    this.description.innerHTML = this.getDescription();
-    this.nav.innerHTML = this.getNav();
-
-
-
+    this.drawElement();
 
 };
+
+/**
+ * Отрисовываем всю информацию
+ */
+Content.prototype.drawElement = function () {
+
+    this.description.textContent = this.getDescription();
+    this.h1.textContent = this.getH1();
+    this.makeTask();
+    this.nav.innerHTML = this.getNav();
+    this.subMenu.innerHTML = this.getSubMenu();
+
+}
+
+/**
+ * Метод выполнения непосредственно заданий
+ */
+Content.prototype.makeTask = function () {
+
+    this.task.innerHTML = "";
+
+    if (this.subPageId !== -1) {
+        switch (this.pageId) {
+
+            case 1:
+                switch (this.subPageId) {
+                    case 1:
+                        createMenu(this.task);
+                        break;
+                    case 2:
+                        let hamburger = new Hamburger("task");
+                        break;
+                }
+                break;
+            case 2:
+                switch (this.subPageId) {
+                    case 0:
+                    case 1:
+                        createMenu(this.task);
+                        break;
+                    case 2:
+                        let image = new ImageBox("task");
+                        break;
+                    case 3:
+                        let a = new AjaxHandler("task");
+                        break;
+                }
+
+        }
+
+    }
+}
 
 Content.prototype.getH1 = function () {
 
@@ -278,6 +339,9 @@ Content.prototype.getNav = function () {
 
 }
 
+/**
+ * Методы отрисовки меню
+ */
 Content.prototype.renderMenu = function () {
 
     let menuItems = [];
@@ -292,6 +356,13 @@ Content.prototype.renderMenu = function () {
 
 };
 
+/**
+ * Получаем объект меню
+ * @param   {string} id = ""           id меню
+ * @param   {string} classCss = "menu" стиль css меню
+ * @param   {array} pages = []        Информация о страницах
+ * @returns {object} Возвращает сформированный объект меню
+ */
 Content.prototype.getMenu = function (id = "", classCss = "menu", pages = []) {
 
     let menuItem = [];
@@ -304,6 +375,11 @@ Content.prototype.getMenu = function (id = "", classCss = "menu", pages = []) {
 
 };
 
+/**
+ * Формируем menu item
+ * @param   {object}   page информация о страницах
+ * @returns {object} возвращаем  объект menuitem
+ */
 Content.prototype.getMenuItem = function (page) {
 
     let menu = {};
@@ -327,3 +403,89 @@ window.onload = function () {
 window.onhashchange = function () {
     content.render();
 }
+
+/**
+ * Объект обработчик Ajax запросов
+ * @param {string} parentId Id объекта, где его будем отрисовывать
+ */
+function AjaxHandler(parentId) {
+
+    this.errorPath = './json/answer/error.json';
+    this.successPath = './json/answer/success.json';
+
+    this.parent = document.getElementById(parentId);
+
+    this.ajaxObg = new _Ajax();
+
+    this.render();
+
+    this.canvas;
+}
+
+AjaxHandler.prototype.render = function () {
+
+    let div = document.createElement('div');
+    div.classList.add("ajaxHandler");
+    this.parent.appendChild(div);
+
+    let button = document.createElement('input');
+    let attr = document.createAttribute("type");
+    attr.value = 'button';
+    button.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = 'Получить ошибку';
+    button.setAttributeNode(attr);
+    div.appendChild(button);
+
+    button.addEventListener('click', () => this.getError());
+
+
+    button = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'button';
+    button.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = 'Получить, что все ок';
+    button.setAttributeNode(attr);
+    div.appendChild(button);
+
+    button.addEventListener('click', () => this.getSuccess());
+
+    this.canvas = document.createElement('div');
+    this.canvas.classList.add("ajaxCanvas");
+    div.appendChild(this.canvas);
+
+};
+
+/**
+ * Отправляем запрос для получения ошибки
+ */
+AjaxHandler.prototype.getError = function () {
+
+    this.ajaxObg.getAsync(this.errorPath, this);
+};
+
+/**
+ * Отправляем запрос для получения успеного результата
+ */
+AjaxHandler.prototype.getSuccess = function () {
+
+    this.ajaxObg.getAsync(this.successPath, this);
+};
+
+/**
+ * Обрабатываем полученный ответ
+ * @param {object} data присланные данные от сервера - обычно JSON объект
+ */
+AjaxHandler.prototype.process = function (data) {
+
+    data = JSON.parse(data);
+
+    if (data.result === "success")
+        this.canvas.textContent = "Миссия выполнена успешно!"
+    else {
+        this.canvas.textContent = "Внимание - ошибка!"
+    }
+};
