@@ -227,7 +227,7 @@ Content.prototype.render = function () {
  */
 Content.prototype.drawElement = function () {
 
-    this.description.textContent = this.getDescription();
+    this.description.innerHTML = this.getDescription();
     this.h1.textContent = this.getH1();
     this.makeTask();
     this.nav.innerHTML = this.getNav();
@@ -266,6 +266,19 @@ Content.prototype.makeTask = function () {
                         break;
                     case 3:
                         let a = new AjaxHandler("task");
+                        break;
+                }
+
+                break;
+            case 3:
+                switch (this.subPageId) {
+                    case 0:
+                        let a = new Lesson3("task");
+
+                        break;
+                    case 1:
+                        break;
+                    case 2:
                         break;
                 }
 
