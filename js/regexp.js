@@ -232,7 +232,7 @@ Task2L3.prototype.make = function () {
 
     // условие
     let condition1 = "(?!\\w)";
-    let condition2 = "(?!\\w{1})";
+    let condition2 = "(?!t)";
     let regex = new RegExp(condition1 + this.find + condition2, "g");
 
     this.result.textContent = this.text.replace(regex, this.replace);
