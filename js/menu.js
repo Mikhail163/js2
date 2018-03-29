@@ -90,41 +90,41 @@ function createMenu(menu = menu1) {
     menuMain = new Menu('my1', 'menu');
     //console.log(menuMain.render());
     menu.innerHTML = menuMain.render([
-                new MenuItem('/', 'Home'),
-                new MenuItem('/about', 'О нас'),
-                new MenuItem('/service', 'Услуги',
+                new MenuItem('#', 'Home'),
+                new MenuItem('#about', 'О нас'),
+                new MenuItem('#service', 'Услуги',
             new Menu('my3', 'menu', [
-                            new MenuItem('/service/develop', 'разработка',
+                            new MenuItem('#service/develop', 'разработка',
                     new Menu('my5', 'menu', [
-                            new MenuItem('/blog/develop/junior', 'начальный уровень',
+                            new MenuItem('#blog/develop/junior', 'начальный уровень',
                             new Menu('my6', 'menu', [
-                            new MenuItem('/blog/develop/junior/php', 'php'),
-                            new MenuItem('/blog/develop/junior/js', 'js'),
-                            new MenuItem('/blog/develop/junior/py', 'py'),
+                            new MenuItem('#blog/develop/junior/php', 'php'),
+                            new MenuItem('#blog/develop/junior/js', 'js'),
+                            new MenuItem('#blog/develop/junior/py', 'py'),
                 ])
 
                                         ),
-                            new MenuItem('/blog/develop/develop', 'базовый уровень'),
-                            new MenuItem('/blog/develop/master', 'профессиональный уровень'),
+                            new MenuItem('#blog/develop/develop', 'базовый уровень'),
+                            new MenuItem('#blog/develop/master', 'профессиональный уровень'),
                 ])
                                         ),
-                            new MenuItem('/service/saas', 'облачные решения'),
-                            new MenuItem('/blog/test', 'тестирование'),
+                            new MenuItem('#service/saas', 'облачные решения'),
+                            new MenuItem('#blog/test', 'тестирование'),
                 ])),
-                new MenuItem('/blog', 'Блог',
+                new MenuItem('#blog', 'Блог',
             new Menu('my2', 'menu', [
-                            new MenuItem('/blog/php', 'php'),
-                            new MenuItem('/blog/js', 'js',
+                            new MenuItem('#blog/php', 'php'),
+                            new MenuItem('#blog/js', 'js',
                     new Menu('my4', 'menu', [
-                            new MenuItem('/blog/js/1', 'начальный уровень'),
-                            new MenuItem('/blog/js/2', 'базовый уровень'),
-                            new MenuItem('/blog/js/3', 'профессиональный уровень'),
+                            new MenuItem('#blog/js/1', 'начальный уровень'),
+                            new MenuItem('#blog/js/2', 'базовый уровень'),
+                            new MenuItem('#blog/js/3', 'профессиональный уровень'),
                 ])
                                         ),
-                            new MenuItem('/blog/mysql', 'mysql'),
-                            new MenuItem('/blog/yii2', 'yii2'),
+                            new MenuItem('#blog/mysql', 'mysql'),
+                            new MenuItem('#blog/yii2', 'yii2'),
                 ])),
-                new MenuItem('/contacts', 'Контакты'),
+                new MenuItem('#contacts', 'Контакты'),
                 //new Menu('34', '324', [])
                 ]);
 }
