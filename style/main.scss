@@ -221,3 +221,37 @@ header {
     display: flex;
     flex-direction: column;
 }
+
+.feedback {
+    width: 500px;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 10px;
+
+    span {
+        width: 400px;
+        text-align: left;
+        box-sizing: border-box;
+    }
+
+    input[type="text"],
+    textarea {
+        box-sizing: border-box;
+        width: 400px;
+        padding: 5px;
+        border: 2px solid $main-color-light;
+        border-radius: 3px;
+
+        &.error {
+            border-color: red;
+        }
+    }
+
+    input[type="button"] {
+        width: fit-content;
+        box-sizing: border-box;
+        padding: 10px;
+        margin-top: 10px;
+    }
+}

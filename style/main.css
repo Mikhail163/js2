@@ -169,4 +169,30 @@ header {
   display: flex;
   flex-direction: column; }
 
+.feedback {
+  width: 500px;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px; }
+  .feedback span {
+    width: 400px;
+    text-align: left;
+    box-sizing: border-box; }
+  .feedback input[type="text"],
+  .feedback textarea {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 5px;
+    border: 2px solid #83d0f2;
+    border-radius: 3px; }
+    .feedback input[type="text"].error,
+    .feedback textarea.error {
+      border-color: red; }
+  .feedback input[type="button"] {
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px; }
+
 /*# sourceMappingURL=main.css.map */
