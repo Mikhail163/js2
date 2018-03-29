@@ -8,10 +8,18 @@ function Reg() {
 }
 
 
-function Lesson3(parentId) {
+function Lesson3(parentId, task = 0) {
 
+    let a;
     this.parent = document.getElementById(parentId);
-    let a = new Task1L3(this.parent);
+    switch (task) {
+        case 0:
+            a = new Task1L3(this.parent);
+            break;
+        case 1:
+            a = new Task2L3(this.parent);
+            break;
+    }
 }
 
 /**
@@ -32,11 +40,12 @@ Lesson3.prototype.task1Make = function () {
  * используются одинарные кавычки. Придумать шаблон, который 
  * меняет одинарные кавычки на двойные.
  */
-function Task1L3(parent) {
+function Task1L3(parent, text = "") {
 
     this.parent = parent;
 
-    this.text = "' Здравствуйте! А в продаже есть печенье «Ореховое»? ' Этого печенья нет, оно закончилось. ' Извините, а почему тогда на витрине выставлена пачка и написано «Ореховое»? ' Где?... Ах, это! Эта пачка не настоящая, а муляж. ' Ух ты! А зачем муляжи-то? ' Чтобы покупатели видели, что обычно «Ореховое» есть у нас в ассортименте.";
+
+    this.text = text === "" ? "' wasn't isn't aren'rerer Здравствуйте! А в продаже есть печенье «Ореховое»? ' Этого печенья нет, оно закончилось. ' Извините, а почему тогда на витрине выставлена пачка и написано «Ореховое»? ' Где?... Ах, это! Эта пачка не настоящая, а муляж. ' Ух ты! А зачем муляжи-то? ' Чтобы покупатели видели, что обычно «Ореховое» есть у нас в ассортименте." : text;
 
     this.find = "'";
     this.replace = '"';
@@ -78,6 +87,9 @@ Task1L3.prototype.render = function () {
     attr = document.createAttribute("value");
     attr.value = this.find;
     input.setAttributeNode(attr);
+
+    input.addEventListener('change', (e) => this.findChange(e));
+
     field.appendChild(input);
 
     // На что меняем?
@@ -95,18 +107,11 @@ Task1L3.prototype.render = function () {
     attr.value = this.replace;
     input.setAttributeNode(attr);
 
+    input.addEventListener('change', (e) => this.replaceChange(e));
+
     field.appendChild(input);
 
-    // Рисуем кнопку поиска и замены
-    input = document.createElement('input');
-    attr = document.createAttribute("type");
-    attr.value = 'button';
-    input.setAttributeNode(attr);
 
-    attr = document.createAttribute("value");
-    attr.value = "Заменить";
-    input.setAttributeNode(attr);
-    field.appendChild(input);
 
 
     // Создаем новое поле, для текста и результата
@@ -122,6 +127,21 @@ Task1L3.prototype.render = function () {
 
     input = document.createElement('textarea');
     input.textContent = this.text;
+    input.addEventListener('change', (e) => this.textChange(e));
+    field.appendChild(input);
+
+    // Рисуем кнопку поиска и замены
+    input = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'button';
+    input.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = "Заменить";
+    input.setAttributeNode(attr);
+
+    input.addEventListener('click', (e) => this.make());
+
     field.appendChild(input);
 
     // рисуем элемент вывода результатов
@@ -136,14 +156,85 @@ Task1L3.prototype.render = function () {
 
 };
 
+/**
+ * Изменили строку, которую нужно найти
+ * @param {object} event Событие вызвавшее изменение
+ */
+Task1L3.prototype.findChange = function (event) {
+    this.find = event.path[0].value;
+
+    // Проверяем на запрещенные символы
+    console.log("find = " + this.find);
+};
+
+/**
+ * Изменили заменяемую строку
+ * @param {object} event событие, вызвавшее изменение
+ */
+Task1L3.prototype.replaceChange = function (event) {
+
+    this.replace = event.path[0].value;
+
+    console.log("replace = " + this.replace);
+
+};
+
+/**
+ * События изменения текста
+ * @param {object} event Объект, который вызвал событие - извлекаем текст
+ */
+Task1L3.prototype.textChange = function (event) {
+
+    this.text = event.path[0].textContent;
+    console.log("text = " + this.text);
+};
+
+/**
+ * Полностю очищаем поле задания со всеми элементами
+ */
 Task1L3.prototype.clear = function () {
 
     this.parent.innerHTML = "";
 
 };
 
+/**
+ * Выполняем замену символов с помощью регулярных выражений
+ */
 Task1L3.prototype.make = function () {
 
-    ;
+
+    let regex = new RegExp(this.find, "g");
+
+    this.result.textContent = this.text.replace(regex, this.replace);
+
+};
+
+
+/**
+ * Выполняем второе задание - это то же первое задание
+ * только изменился один метод обработки
+ * @param {[[Type]]} parent [[Description]]
+ */
+
+function Task2L3(parent) {
+    Task1L3.call(this, parent);
+
+}
+
+Task2L3.prototype = Object.create(Task1L3.prototype);
+
+/**
+ * Задание 2 урока 3:
+ * Улучшить шаблон таким образом, чтобы конструкции типа aren’t не меняли одинарную кавычку на двойную.
+ */
+Task2L3.prototype.make = function () {
+
+    // условие
+    let condition1 = "(?!\\w)";
+    let condition2 = "(?!\\w{1})";
+    let regex = new RegExp(condition1 + this.find + condition2, "g");
+
+    this.result.textContent = this.text.replace(regex, this.replace);
 
 };

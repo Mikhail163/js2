@@ -271,16 +271,10 @@ Content.prototype.makeTask = function () {
 
                 break;
             case 3:
-                switch (this.subPageId) {
-                    case 0:
-                        let a = new Lesson3("task");
 
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                }
+                let a = new Lesson3("task", this.subPageId);
+                break;
+
 
         }
 

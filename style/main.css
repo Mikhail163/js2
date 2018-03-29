@@ -165,4 +165,8 @@ header {
   left: 10px;
   cursor: pointer; }
 
+.field {
+  display: flex;
+  flex-direction: column; }
+
 /*# sourceMappingURL=main.css.map */
