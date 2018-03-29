@@ -23,12 +23,18 @@ Validate.prototype.email = function (email) {
     return reg.test(email);
 };
 
+// Телефон подчиняется шаблону +7(000)000-0000;**
 Validate.prototype.phone = function (phone) {
     let reg = new RegExp("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$");
 
     return reg.test(phone);
 };
 
+/**
+ * Выполнение урока 3
+ * @param {string} parentId Id объекта, где все отрисовывать
+ * @param {integer} task = 0 Номер решаемого задания
+ */
 function Lesson3(parentId, task = 0) {
 
     let a;
@@ -267,6 +273,10 @@ Task2L3.prototype.make = function () {
 };
 
 
+/**
+ * Объект обратной связи
+ * @param {HTMLElement} parent тот элемент, где все будет отрисовано
+ */
 function FeedBack(parent) {
     this.parent = parent;
 
@@ -279,6 +289,9 @@ function FeedBack(parent) {
     this.render();
 }
 
+/**
+ * Очищаем содержимое родителя
+ */
 FeedBack.prototype.clear = function () {
 
     this.parent.innerHTML = "";
@@ -287,6 +300,9 @@ FeedBack.prototype.clear = function () {
 
 };
 
+/**
+ * Отрисовка формы обратной связи
+ */
 FeedBack.prototype.render = function () {
 
     this.clear();
@@ -355,6 +371,9 @@ FeedBack.prototype.render = function () {
 
 };
 
+/**
+ * Посылаем данные
+ */
 FeedBack.prototype.send = function () {
 
     if (this.validate())
@@ -363,6 +382,10 @@ FeedBack.prototype.send = function () {
 
 };
 
+/**
+ * Проверка формы обратной связи
+ * @returns {boolean} Форма прошла проверку или нет?
+ */
 FeedBack.prototype.validate = function () {
 
     let result = true;
