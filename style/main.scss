@@ -255,3 +255,61 @@ header {
         margin-top: 10px;
     }
 }
+
+.jqMenuNav {
+
+    width: 100%;
+    display: flex;
+    box-sizing: border-box;
+
+    & div {
+        padding: 9px 15px;
+        margin: 1px 0 0 1px;
+
+
+        position: relative;
+        border: solid #61AF6A;
+        border-width: 2px 2px 0;
+        border-radius: 5px 5px 0 0;
+        text-align: center;
+        cursor: pointer;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: #FFF;
+        }
+
+        &.hide {
+            background: #61AF6A;
+            color: #FFF;
+
+            &::after {
+                display: none;
+            }
+        }
+    }
+
+}
+
+.jqMenuDescription {
+    & div {
+        display: block;
+        background: #FFF;
+        border: 2px solid #7DCA86;
+        border-radius: 0 5px 5px 5px;
+        padding: 7px 15px;
+
+        &.hide {
+            display: none;
+        }
+    }
+}

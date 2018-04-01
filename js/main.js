@@ -23,6 +23,10 @@ function Page(h1 = "", description = [], link = new Link(), subpages = []) {
 
 }
 
+
+
+
+
 /**
  * Контент на нашей странице
  * @param {string} contentId = "content" Id того, где все будем отрисовывать
@@ -242,6 +246,8 @@ Content.prototype.makeTask = function () {
 
     this.task.innerHTML = "";
 
+    let a;
+
     if (this.subPageId !== -1) {
         switch (this.pageId) {
 
@@ -265,14 +271,18 @@ Content.prototype.makeTask = function () {
                         let image = new ImageBox("task");
                         break;
                     case 3:
-                        let a = new AjaxHandler("task");
+                        a = new AjaxHandler("task");
                         break;
                 }
 
                 break;
             case 3:
 
-                let a = new Lesson3("task", this.subPageId);
+                a = new Lesson3("task", this.subPageId);
+                break;
+
+            case 4:
+                a = new Lesson4("task", this.subPageId);
                 break;
 
 

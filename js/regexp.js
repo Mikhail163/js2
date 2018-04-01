@@ -157,6 +157,7 @@ Task1L3.prototype.render = function () {
 
 
     this.textarea = document.createElement('textarea');
+    this.textarea.addEventListener('change', (e) => this.textChange(e));
     this.textarea.textContent = this.text;
 
     field.appendChild(this.textarea);
