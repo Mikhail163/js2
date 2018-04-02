@@ -201,22 +201,26 @@ header {
 
 .city {
   position: relative;
-  display: flex; }
-  .city::after {
-    display: none;
-    content: "";
+  display: flex;
+  box-sizing: border-box; }
+  .city-select {
     position: absolute;
-    bottom: 0;
-    height: 3px;
-    background-color: white;
+    box-sizing: border-box;
     width: 396px;
     left: 1px;
+    top: 28px;
     border: 1px solid black;
     border-top-width: 0px;
-    border-bottom-width: 0px;
-    background-color: red; }
-  .city:hover::after {
-    display: block; }
+    background-color: white;
+    z-index: 1; }
+    .city-select-option {
+      width: 100%;
+      padding-top: 3px;
+      box-sizing: border-box;
+      padding-bottom: 3px;
+      cursor: pointer; }
+      .city-select-option:hover {
+        background-color: aliceblue; }
 
 .jqMenuNav {
   width: 100%;

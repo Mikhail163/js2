@@ -263,28 +263,30 @@ header {
 .city {
     position: relative;
     display: flex;
+    box-sizing: border-box;
 
 
-    &::after {
-        display: none;
-        content: "";
+    &-select {
         position: absolute;
-        bottom: 0;
-        height: 3px;
-        background-color: white;
+        box-sizing: border-box;
         width: 396px;
         left: 1px;
+        top: 28px;
         border: 1px solid black;
         border-top-width: 0px;
-        border-bottom-width: 0px;
-        background-color: red;
-    }
+        background-color: white;
+        z-index: 1;
 
+        &-option {
+            width: 100%;
+            padding-top: 3px;
+            box-sizing: border-box;
+            padding-bottom: 3px;
+            cursor: pointer;
 
-    &:hover {
-
-        &::after {
-            display: block;
+            &:hover {
+                background-color: aliceblue;
+            }
         }
     }
 }
