@@ -3,11 +3,38 @@
 /**
  * Объект обработки регулярных выражений
  */
-function Reg() {
+function Validate() {
 
 }
 
+// Имя содержит только буквы
+Validate.prototype.name = function (name) {
 
+    let reg = new RegExp("^[A-zА-яЁё]+$");
+
+    return reg.test(name);
+};
+
+// E-mail выглядит как mymail@mail.ru, или my.mail@mail.ru, или my-mail@mail.ru**
+Validate.prototype.email = function (email) {
+
+    let reg = new RegExp("^[-._a-z0-9]+@(?:[a-z0-9][-a-z0-9]+\.)+[a-z]{2,6}$");
+
+    return reg.test(email);
+};
+
+// Телефон подчиняется шаблону +7(000)000-0000;**
+Validate.prototype.phone = function (phone) {
+    let reg = new RegExp("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$");
+
+    return reg.test(phone);
+};
+
+/**
+ * Выполнение урока 3
+ * @param {string} parentId Id объекта, где все отрисовывать
+ * @param {integer} task = 0 Номер решаемого задания
+ */
 function Lesson3(parentId, task = 0) {
 
     let a;
@@ -18,6 +45,9 @@ function Lesson3(parentId, task = 0) {
             break;
         case 1:
             a = new Task2L3(this.parent);
+            break;
+        case 2:
+            a = new FeedBack(this.parent);
             break;
     }
 }
@@ -43,6 +73,7 @@ Lesson3.prototype.task1Make = function () {
 function Task1L3(parent, text = "") {
 
     this.parent = parent;
+    this.textarea;
 
 
     this.text = text === "" ? "' wasn't isn't aren'rerer Здравствуйте! А в продаже есть печенье «Ореховое»? ' Этого печенья нет, оно закончилось. ' Извините, а почему тогда на витрине выставлена пачка и написано «Ореховое»? ' Где?... Ах, это! Эта пачка не настоящая, а муляж. ' Ух ты! А зачем муляжи-то? ' Чтобы покупатели видели, что обычно «Ореховое» есть у нас в ассортименте." : text;
@@ -125,10 +156,11 @@ Task1L3.prototype.render = function () {
     field.appendChild(span);
 
 
-    input = document.createElement('textarea');
-    input.textContent = this.text;
-    field.appendChild(input);
-    input.addEventListener('change', (e) => this.textChange(e));
+    this.textarea = document.createElement('textarea');
+    this.textarea.addEventListener('change', (e) => this.textChange(e));
+    this.textarea.textContent = this.text;
+
+    field.appendChild(this.textarea);
 
     // Рисуем кнопку поиска и замены
     input = document.createElement('input');
@@ -206,7 +238,7 @@ Task1L3.prototype.make = function () {
 
     let regex = new RegExp(this.find, "g");
 
-    this.result.textContent = this.text.replace(regex, this.replace);
+    this.result.textContent = this.textarea.textContent.replace(regex, this.replace);
 
 };
 
@@ -235,20 +267,151 @@ Task2L3.prototype.make = function () {
     let condition2 = "(?!t)";
     let regex = new RegExp(condition1 + this.find + condition2, "g");
 
-    this.result.textContent = this.text.replace(regex, this.replace);
+    let text = this.textarea.textContent;
+
+    this.result.textContent = text.replace(regex, this.replace);
 
 };
 
+
+/**
+ * Объект обратной связи
+ * @param {HTMLElement} parent тот элемент, где все будет отрисовано
+ */
 function FeedBack(parent) {
     this.parent = parent;
-    //Имя, Телефон, e-mail, текст, кнопка «Отправить».
 
     this.name;
     this.phone;
-    this.mail;
+    this.email;
     this.text;
+    this.valid = new Validate();
+
+    this.render();
 }
 
+/**
+ * Очищаем содержимое родителя
+ */
+FeedBack.prototype.clear = function () {
+
+    this.parent.innerHTML = "";
+
+
+
+};
+
+/**
+ * Отрисовка формы обратной связи
+ */
 FeedBack.prototype.render = function () {
 
+    this.clear();
+
+    let field = document.createElement('div');
+    field.classList.add("field");
+    field.classList.add("feedback");
+    this.parent.appendChild(field);
+
+    // имя
+    let span = document.createElement('span');
+    span.innerHTML = "Имя";
+    field.appendChild(span);
+
+    this.name = document.createElement('input');
+    let attr = document.createAttribute("type");
+    attr.value = 'text';
+    this.name.setAttributeNode(attr);
+    field.appendChild(this.name);
+
+    // телефон
+    span = document.createElement('span');
+    span.innerHTML = "Телефон";
+    field.appendChild(span);
+
+    this.phone = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'text';
+    this.phone.setAttributeNode(attr);
+    field.appendChild(this.phone);
+
+    // email
+    span = document.createElement('span');
+    span.innerHTML = "Email";
+    field.appendChild(span);
+
+    this.email = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'text';
+    this.email.setAttributeNode(attr);
+    field.appendChild(this.email);
+
+
+
+    // текст
+    span = document.createElement('span');
+    span.innerHTML = "Сообщение";
+    field.appendChild(span);
+
+    this.text = document.createElement('textarea');
+    field.appendChild(this.text);
+
+    // кнопка
+    let input = document.createElement('input');
+    attr = document.createAttribute("type");
+    attr.value = 'button';
+    input.setAttributeNode(attr);
+
+    attr = document.createAttribute("value");
+    attr.value = "Отправить";
+    input.setAttributeNode(attr);
+
+    input.addEventListener('click', (e) => this.send());
+
+    field.appendChild(input);
+
+};
+
+/**
+ * Посылаем данные
+ */
+FeedBack.prototype.send = function () {
+
+    if (this.validate())
+        alert("Данные введены верно, спасибо!");
+
+
+};
+
+/**
+ * Проверка формы обратной связи
+ * @returns {boolean} Форма прошла проверку или нет?
+ */
+FeedBack.prototype.validate = function () {
+
+    let result = true;
+
+
+    if (this.valid.name(this.name.value)) {
+        this.name.classList = "";
+    } else {
+        this.name.classList = "error";
+        result = false;
+    }
+
+    if (this.valid.phone(this.phone.value)) {
+        this.phone.classList = "";
+    } else {
+        this.phone.classList = "error";
+        result = false;
+    }
+
+    if (this.valid.email(this.email.value)) {
+        this.email.classList = "";
+    } else {
+        this.email.classList = "error";
+        result = false;
+    }
+
+    return result;
 }

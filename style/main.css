@@ -169,4 +169,68 @@ header {
   display: flex;
   flex-direction: column; }
 
+.feedback {
+  width: 500px;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 10px; }
+  .feedback span {
+    width: 400px;
+    text-align: left;
+    box-sizing: border-box; }
+  .feedback input[type="text"],
+  .feedback textarea {
+    box-sizing: border-box;
+    width: 400px;
+    padding: 5px;
+    border: 2px solid #83d0f2;
+    border-radius: 3px; }
+    .feedback input[type="text"].error,
+    .feedback textarea.error {
+      border-color: red; }
+  .feedback input[type="button"] {
+    width: fit-content;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px; }
+
+.jqMenuNav {
+  width: 100%;
+  display: flex;
+  box-sizing: border-box; }
+  .jqMenuNav div {
+    padding: 9px 15px;
+    margin: 1px 0 0 1px;
+    position: relative;
+    border: solid #61AF6A;
+    border-width: 2px 2px 0;
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+    cursor: pointer; }
+    .jqMenuNav div:first-child {
+      margin-left: 0; }
+    .jqMenuNav div::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: #FFF; }
+    .jqMenuNav div.hide {
+      background: #61AF6A;
+      color: #FFF; }
+      .jqMenuNav div.hide::after {
+        display: none; }
+
+.jqMenuDescription div {
+  display: block;
+  background: #FFF;
+  border: 2px solid #7DCA86;
+  border-radius: 0 5px 5px 5px;
+  padding: 7px 15px; }
+  .jqMenuDescription div.hide {
+    display: none; }
+
 /*# sourceMappingURL=main.css.map */
