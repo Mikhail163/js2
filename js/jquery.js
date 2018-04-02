@@ -10,6 +10,7 @@ function Lesson4(parentId, task = 0) {
             a = new jqControl(parentId);
             break;
         case 1:
+        case 2:
             a = new jqFeedBack(this.parent);
             break;
             /*case 2:
@@ -224,6 +225,8 @@ jqFeedBack.prototype.renderCity = function (data) {
     this.citySelect.classList.add("city-select");
     div.appendChild(this.citySelect);
 
+    $(this.citySelect).hide();
+
 
 }
 jqFeedBack.prototype.findCity = function (city) {
@@ -234,7 +237,7 @@ jqFeedBack.prototype.findCity = function (city) {
         return;
     }
 
-
+    $(this.citySelect).show();
     const result = this.city.filter(word => word.substring(0, city.length).toUpperCase() === city.toUpperCase());
 
     for (let i = 0; i < result.length; i++) {
@@ -255,4 +258,5 @@ jqFeedBack.prototype.cityChange = function (city) {
 
 jqFeedBack.prototype.destroyCitySelect = function () {
     this.citySelect.innerHTML = "";
+    $(this.citySelect).hide();
 }
