@@ -174,7 +174,9 @@ header {
   justify-content: center;
   text-align: center;
   box-sizing: border-box;
-  padding: 10px; }
+  padding: 10px;
+  padding-bottom: 60px;
+  position: relative; }
   .feedback span {
     width: 400px;
     text-align: left;
@@ -193,7 +195,28 @@ header {
     width: fit-content;
     box-sizing: border-box;
     padding: 10px;
-    margin-top: 10px; }
+    margin-top: 10px;
+    position: absolute;
+    bottom: 0; }
+
+.city {
+  position: relative;
+  display: flex; }
+  .city::after {
+    display: none;
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background-color: white;
+    width: 396px;
+    left: 1px;
+    border: 1px solid black;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    background-color: red; }
+  .city:hover::after {
+    display: block; }
 
 .jqMenuNav {
   width: 100%;

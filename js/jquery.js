@@ -172,6 +172,8 @@ jqControl.prototype.menuClick = function (e) {
 function jqFeedBack(parent) {
     FeedBack.call(this, parent);
 
+    this.inputCity;
+    this.citySelect;
 
     this.city = [];
 
@@ -195,7 +197,62 @@ jqFeedBack.prototype.initCity = function () {
  */
 jqFeedBack.prototype.renderCity = function (data) {
     this.city = data;
+    this.parent
+
+    let field = $("#task").find(".field");
+    field = field[0];
+
+    let span = document.createElement('span');
+    span.innerHTML = "Город";
+    field.appendChild(span);
+
+    let div = document.createElement('div');
+    div.classList.add("city");
+    field.appendChild(div);
+
+    this.inputCity = document.createElement('input');
+    let attr = document.createAttribute("type");
+    attr.value = 'text';
+    this.inputCity.classList.add("city-input");
+    this.inputCity.setAttributeNode(attr);
+    this.inputCity.addEventListener('keyup', (e) => this.findCity(e.path[0].value));
 
 
+    div.appendChild(this.inputCity);
 
+    this.citySelect = document.createElement('div');
+    this.citySelect.classList.add("city-select");
+    div.appendChild(this.citySelect);
+
+
+}
+jqFeedBack.prototype.findCity = function (city) {
+
+    this.destroyCitySelect();
+
+    if (city.length === 0) {
+        return;
+    }
+
+
+    const result = this.city.filter(word => word.substring(0, city.length).toUpperCase() === city.toUpperCase());
+
+    for (let i = 0; i < result.length; i++) {
+        let div = document.createElement('div');
+        div.classList.add("city-select-option");
+        div.textContent = result[i];
+        div.addEventListener('click', () => this.cityChange(result[i]));
+        this.citySelect.appendChild(div);
+    }
+
+
+}
+
+jqFeedBack.prototype.cityChange = function (city) {
+    this.inputCity.value = city;
+    this.destroyCitySelect();
+}
+
+jqFeedBack.prototype.destroyCitySelect = function () {
+    this.citySelect.innerHTML = "";
 }
