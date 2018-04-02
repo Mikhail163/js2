@@ -272,10 +272,11 @@ header {
         width: 396px;
         left: 1px;
         top: 28px;
-        border: 1px solid black;
+        border: 2px solid $main-color-light;
         border-top-width: 0px;
         background-color: white;
         z-index: 1;
+        border-radius: 0 0 3px 3px;
 
         &-option {
             width: 100%;
@@ -285,7 +286,7 @@ header {
             cursor: pointer;
 
             &:hover {
-                background-color: aliceblue;
+                background-color: $main-color-light;
             }
         }
     }

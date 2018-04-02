@@ -209,10 +209,11 @@ header {
     width: 396px;
     left: 1px;
     top: 28px;
-    border: 1px solid black;
+    border: 2px solid #83d0f2;
     border-top-width: 0px;
     background-color: white;
-    z-index: 1; }
+    z-index: 1;
+    border-radius: 0 0 3px 3px; }
     .city-select-option {
       width: 100%;
       padding-top: 3px;
@@ -220,7 +221,7 @@ header {
       padding-bottom: 3px;
       cursor: pointer; }
       .city-select-option:hover {
-        background-color: aliceblue; }
+        background-color: #83d0f2; }
 
 .jqMenuNav {
   width: 100%;
