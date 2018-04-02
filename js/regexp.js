@@ -127,8 +127,8 @@ Task1L3.prototype.render = function () {
 
     input = document.createElement('textarea');
     input.textContent = this.text;
-    input.addEventListener('change', (e) => this.textChange(e));
     field.appendChild(input);
+    input.addEventListener('change', (e) => this.textChange(e));
 
     // Рисуем кнопку поиска и замены
     input = document.createElement('input');
@@ -238,3 +238,17 @@ Task2L3.prototype.make = function () {
     this.result.textContent = this.text.replace(regex, this.replace);
 
 };
+
+function FeedBack(parent) {
+    this.parent = parent;
+    //Имя, Телефон, e-mail, текст, кнопка «Отправить».
+
+    this.name;
+    this.phone;
+    this.mail;
+    this.text;
+}
+
+FeedBack.prototype.render = function () {
+
+}
